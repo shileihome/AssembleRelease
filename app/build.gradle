@@ -19,6 +19,11 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        //使所有的flavor处于同一纬度
+        flavorDimensions "versionCode"
+
+        multiDexEnabled true;//突破应用方法数65535
+        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "umeng"]//默认的渠道
     }
     buildTypes {
         release {
@@ -31,6 +36,19 @@ android {
             versionNameSuffix '-debug'
             zipAlignEnabled false
         }
+    }
+
+    productFlavors {
+        xiaomi {}
+        wandoujia {}
+        baidu {
+        }
+        tencent {
+        }
+    }
+    //动态替换UMENG_CHANNEL_VALUE的占位符
+    productFlavors.all {
+        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
     }
 }
 
